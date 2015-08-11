@@ -12,6 +12,5 @@ case class Checkout(discounts: Map[Goods, Function1[Int, Int]] = Map[Goods, Func
 
   val defaultDiscount = (x: Int) => x
 
-  def getPrice(item: Goods, qty: Int): Option[BigDecimal] =
-    prices.get(item).map(_ * discounts.getOrElse(item, defaultDiscount)(qty))
+  def getPrice(item: Goods, qty: Int): Option[BigDecimal] = prices.get(item).map(_ * discounts.getOrElse(item, defaultDiscount)(qty))
 }
