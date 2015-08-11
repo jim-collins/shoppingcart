@@ -24,4 +24,21 @@ class CheckoutUnitSpec extends Specification {
       checkout.checkout(List(Orange)) must beEqualTo(0.25)
     }
   }
+  "A checkout with discounts" should {
+    val appleDiscount = (x: Int) => x - (x / 2)
+    val orangeDiscount = (x: Int) => x - (x / 3)
+    val discounts = Map[Goods, Function1[Int, Int]](Apple -> appleDiscount, Orange -> orangeDiscount)
+    """Only charge for 1 in 2 apples""" in {
+      val checkout = new Checkout(discounts)
+      checkout.checkout(List(Apple,Apple,Apple)) must  beEqualTo(1.2)
+      checkout.checkout(List(Apple,Apple,Apple,Apple)) must  beEqualTo(1.2)
+    }
+    """Give 3 oranges for the price of 2""" in {
+      val checkout = new Checkout(discounts)
+      checkout.checkout(List(Orange,Orange,Orange)) must  beEqualTo(0.5)
+      checkout.checkout(List(Orange,Orange,Orange,Orange)) must  beEqualTo(0.75)
+      checkout.checkout(List(Orange,Orange,Orange,Orange,Orange)) must  beEqualTo(1.0)
+      checkout.checkout(List(Orange,Orange,Orange,Orange,Orange,Orange)) must  beEqualTo(1.0)
+    }
+  }
 }
