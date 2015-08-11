@@ -7,4 +7,4 @@ sealed trait Goods
 
 case object Apple extends Goods
 
-case object Orange extends
+case object Orange extends Goods
