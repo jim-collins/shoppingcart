@@ -4,8 +4,8 @@ import org.specs2.mutable._
 
 
 /**
- * Created by Jim on 10/08/2015.
- */
+  * Created by Jim on 10/08/2015.
+  */
 class CheckoutUnitSpec extends Specification {
   "A checkout" should {
     """correctly total a mixed basket of apples and oranges""" in {
@@ -40,6 +40,19 @@ class CheckoutUnitSpec extends Specification {
       checkout.checkout(List(Orange,Orange,Orange,Orange)) must  beEqualTo(0.75)
       checkout.checkout(List(Orange,Orange,Orange,Orange,Orange)) must  beEqualTo(1.0)
       checkout.checkout(List(Orange,Orange,Orange,Orange,Orange,Orange)) must  beEqualTo(1.0)
+    }
+    """three for two oranges and pears""" in {
+      val co = new Checkout
+      co checkout List(Orange, Apple, Orange, Pear) must beEqualTo(1.10)
+    }
+    """buy apple apple bananna""" in {
+      val co = new CheckOut2(List(CheckOut2.dis))
+      co checkout List(Apple, Bananna, Apple) must beEqualTo(1.20)
+    }
+
+    """multiples of apples banannas""" in {
+      val co = new CheckOut2(List(CheckOut2.dis))
+      co checkout List(Bananna,Bananna,Apple) must beEqualTo(.80)
     }
   }
 }
